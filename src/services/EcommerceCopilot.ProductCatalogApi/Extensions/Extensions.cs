@@ -6,6 +6,7 @@ public static class Extensions
 {
     public static void AddProductCatalogServices(this IHostApplicationBuilder builder)
     {
+        GridifyGlobalConfiguration.EnableEntityFrameworkCompatibilityLayer();
         if (builder.Environment.IsBuild())
         {
             builder.Services.AddDbContext<ProductCatalogContext>();

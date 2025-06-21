@@ -1,5 +1,6 @@
 ﻿using EcommerceCopilot.ProductCatalogApi.Entities;
 using EcommerceCopilot.ProductCatalogApi.Infrastructure;
+using Gridify.EntityFramework;
 
 namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog.GetProductList;
 
@@ -20,20 +21,7 @@ public class Endpoint : Endpoint<GetProductListRequest, GetProductListResponse, 
 
     public override async Task HandleAsync(GetProductListRequest r, CancellationToken c)
     {
-        List<CatalogItem> items = [];
-        if (string.IsNullOrWhiteSpace(r.SearchQuery))
-        {
-            items = await _productCatalogContext.CatalogItems
-                .OrderBy(ci => ci.Name)
-                .Take(10).ToListAsync();
-        }
-        else 
-        {
-            items = await _productCatalogContext.CatalogItems
-                .Where(ci => ci.Name.Contains(r.SearchQuery))
-                .OrderBy(ci => ci.Name)
-                .Take(10).ToListAsync();
-        }
+        Paging<CatalogItem> items = await _productCatalogContext.CatalogItems.GridifyAsync(r);
         await SendAsync(new GetProductListResponse()
         {
             Items = items,

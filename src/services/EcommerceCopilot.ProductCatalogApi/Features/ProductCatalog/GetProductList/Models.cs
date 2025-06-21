@@ -2,20 +2,11 @@
 
 namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog.GetProductList;
 
-public class GetProductListRequest
+public class GetProductListRequest : GridifyQuery
 {
-    public string SearchQuery { get; set; }
-
-    public class Validator : Validator<GetProductListRequest>
-    {
-        public Validator()
-        {
-
-        }
-    }
 }
 
 public class GetProductListResponse
 {
-    public List<CatalogItem> Items { get; set; } = [];
+    public Paging<CatalogItem> Items { get; set; } = new Paging<CatalogItem>();
 }

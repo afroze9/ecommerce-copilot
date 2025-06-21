@@ -1,6 +1,7 @@
 global using FastEndpoints;
 global using Microsoft.EntityFrameworkCore;
 global using EcommerceCopilot.ProductCatalogApi.Extensions;
+global using Gridify;
 using FastEndpoints.Swagger;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
