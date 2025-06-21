@@ -1,0 +1,6 @@
+@EcommerceCopilot.CopilotApi_HostAddress = http://localhost:5276
+
+GET {{EcommerceCopilot.CopilotApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
