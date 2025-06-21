@@ -1,6 +1,8 @@
-﻿namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class CatalogItemDto
+namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog;
+
+public class CatalogItemSummaryDto
 {
     public int Id { get; set; }
 
@@ -11,6 +13,4 @@ public class CatalogItemDto
     public decimal Price { get; set; }
 
     public string ImageUrl { get; set; }
-
-    public CatalogBrandDto CatalogBrand { get; set; }
 }

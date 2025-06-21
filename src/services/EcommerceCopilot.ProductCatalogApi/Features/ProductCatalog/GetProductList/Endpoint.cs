@@ -14,14 +14,14 @@ public class Endpoint : Endpoint<GetProductListRequest, Results<Ok<GetProductLis
 
     public override void Configure()
     {
-        Post("/api/product-catalog");
+        Get("/api/product-catalog");
         AllowAnonymous();
         ResponseCache(60);
     }
 
     public override async Task<Results<Ok<GetProductListResponse>, NotFound>> ExecuteAsync(GetProductListRequest r, CancellationToken c)
     {
-        List<CatalogItemDto> items = await _productCatalogContext.CatalogItems
+        List<CatalogItemSummaryDto> items = await _productCatalogContext.CatalogItems
             .ApplyFilteringOrderingPaging(r)
             .ProjectToDto()
             .ToListAsync(cancellationToken: c);
@@ -33,7 +33,7 @@ public class Endpoint : Endpoint<GetProductListRequest, Results<Ok<GetProductLis
 
         return TypedResults.Ok(new GetProductListResponse
         {
-            Items = new Paging<CatalogItemDto>(items.Count, items),
+            Items = new Paging<CatalogItemSummaryDto>(items.Count, items),
         });
     }
 }

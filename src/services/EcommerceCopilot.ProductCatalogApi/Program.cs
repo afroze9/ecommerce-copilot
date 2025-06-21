@@ -10,7 +10,7 @@ builder.AddProductCatalogServices();
 builder.Services.AddProblemDetails()
     .AddFastEndpoints()
     .AddResponseCaching()
-    .AddSwaggerDocument();
+    .SwaggerDocument();
 
 WebApplication app = builder.Build();
 app.UseExceptionHandler();

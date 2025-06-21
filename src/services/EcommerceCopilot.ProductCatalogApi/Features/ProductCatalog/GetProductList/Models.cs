@@ -6,5 +6,5 @@ public class GetProductListRequest : GridifyQuery
 
 public class GetProductListResponse
 {
-    public Paging<CatalogItemDto> Items { get; set; } = new Paging<CatalogItemDto>();
+    public Paging<CatalogItemSummaryDto> Items { get; set; } = new Paging<CatalogItemSummaryDto>();
 }
