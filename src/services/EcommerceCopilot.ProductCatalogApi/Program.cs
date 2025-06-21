@@ -9,6 +9,7 @@ builder.AddServiceDefaults();
 builder.AddProductCatalogServices();
 builder.Services.AddProblemDetails()
     .AddFastEndpoints()
+    .AddResponseCaching()
     .AddSwaggerDocument();
 
 WebApplication app = builder.Build();
@@ -20,6 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 app
     .MapDefaultEndpoints()
+    .UseResponseCaching()
     .UseFastEndpoints()
     .UseSwaggerGen();
 

@@ -30,18 +30,18 @@ internal static class MigrateDbContextExtensions
 
     private static async Task MigrateDbContextAsync<TContext>(this IServiceProvider services, Func<TContext, IServiceProvider, Task> seeder) where TContext : DbContext
     {
-        using var scope = services.CreateScope();
-        var scopeServices = scope.ServiceProvider;
-        var logger = scopeServices.GetRequiredService<ILogger<TContext>>();
-        var context = scopeServices.GetService<TContext>();
+        using IServiceScope scope = services.CreateScope();
+        IServiceProvider scopeServices = scope.ServiceProvider;
+        ILogger<TContext> logger = scopeServices.GetRequiredService<ILogger<TContext>>();
+        TContext? context = scopeServices.GetService<TContext>();
 
-        using var activity = ActivitySource.StartActivity($"Migration operation {typeof(TContext).Name}");
+        using Activity? activity = ActivitySource.StartActivity($"Migration operation {typeof(TContext).Name}");
 
         try
         {
             logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
 
-            var strategy = context.Database.CreateExecutionStrategy();
+            EntityFrameworkCore.Storage.IExecutionStrategy strategy = context.Database.CreateExecutionStrategy();
 
             await strategy.ExecuteAsync(() => InvokeSeeder(seeder, context, scopeServices));
         }
@@ -58,7 +58,7 @@ internal static class MigrateDbContextExtensions
     private static async Task InvokeSeeder<TContext>(Func<TContext, IServiceProvider, Task> seeder, TContext context, IServiceProvider services)
         where TContext : DbContext
     {
-        using var activity = ActivitySource.StartActivity($"Migrating {typeof(TContext).Name}");
+        using Activity? activity = ActivitySource.StartActivity($"Migrating {typeof(TContext).Name}");
 
         try
         {

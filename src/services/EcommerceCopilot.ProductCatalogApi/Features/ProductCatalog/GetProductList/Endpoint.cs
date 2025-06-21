@@ -1,10 +1,9 @@
-﻿using EcommerceCopilot.ProductCatalogApi.Entities;
-using EcommerceCopilot.ProductCatalogApi.Infrastructure;
-using Gridify.EntityFramework;
+﻿using EcommerceCopilot.ProductCatalogApi.Infrastructure;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog.GetProductList;
 
-public class Endpoint : Endpoint<GetProductListRequest, GetProductListResponse, Mapper>
+public class Endpoint : Endpoint<GetProductListRequest, Results<Ok<GetProductListResponse>, NotFound>>
 {
     private readonly ProductCatalogContext _productCatalogContext;
 
@@ -17,14 +16,24 @@ public class Endpoint : Endpoint<GetProductListRequest, GetProductListResponse, 
     {
         Post("/api/product-catalog");
         AllowAnonymous();
+        ResponseCache(60);
     }
 
-    public override async Task HandleAsync(GetProductListRequest r, CancellationToken c)
+    public override async Task<Results<Ok<GetProductListResponse>, NotFound>> ExecuteAsync(GetProductListRequest r, CancellationToken c)
     {
-        Paging<CatalogItem> items = await _productCatalogContext.CatalogItems.GridifyAsync(r);
-        await SendAsync(new GetProductListResponse()
+        List<CatalogItemDto> items = await _productCatalogContext.CatalogItems
+            .ApplyFilteringOrderingPaging(r)
+            .ProjectToDto()
+            .ToListAsync(cancellationToken: c);
+
+        if (items.Count == 0)
         {
-            Items = items,
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(new GetProductListResponse
+        {
+            Items = new Paging<CatalogItemDto>(items.Count, items),
         });
     }
 }

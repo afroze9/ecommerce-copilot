@@ -2,12 +2,12 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 
 //var insights = builder.AddConnectionString("appInsights", "APPLICATIONINSIGHTS_CONNECTION_STRING");
 
-var postgres = builder.AddPostgres("postgres")
+IResourceBuilder<PostgresServerResource> postgres = builder.AddPostgres("postgres")
     .WithImage("ankane/pgvector")
     .WithImageTag("latest")
     .WithLifetime(ContainerLifetime.Persistent);
 
-var productCatalogDb = postgres.AddDatabase("productCatalogDb");
+IResourceBuilder<PostgresDatabaseResource> productCatalogDb = postgres.AddDatabase("productCatalogDb");
 
 //IResourceBuilder<ProjectResource> copilotApi = builder.AddProject<Projects.EcommerceCopilot_CopilotApi>("copilotapi");
 IResourceBuilder<ProjectResource> productCatalogApi = builder
