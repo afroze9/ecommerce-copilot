@@ -12,8 +12,8 @@ using Pgvector;
 namespace EcommerceCopilot.ProductCatalogApi.Migrations
 {
     [DbContext(typeof(ProductCatalogContext))]
-    [Migration("20250620110904_Initial")]
-    partial class Initial
+    [Migration("20250622170411_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,7 @@ namespace EcommerceCopilot.ProductCatalogApi.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 100L, null, null, null, null, null);
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -51,6 +52,7 @@ namespace EcommerceCopilot.ProductCatalogApi.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 100L, null, null, null, null, null);
 
                     b.Property<int>("CatalogBrandId")
                         .HasColumnType("integer");
@@ -108,6 +110,7 @@ namespace EcommerceCopilot.ProductCatalogApi.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 100L, null, null, null, null, null);
 
                     b.Property<string>("Type")
                         .IsRequired()
