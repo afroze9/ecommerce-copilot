@@ -15,13 +15,13 @@ public class Endpoint : Endpoint<GetProductsByIdsRequest, Results<Ok<GetProducts
 
     public override void Configure()
     {
-        Get("/api/product-catalog/by");
+        Get("/api/catalog/by");
         AllowAnonymous();
     }
 
     public override async Task<Results<Ok<GetProductsByIdsResponse>, NotFound>> ExecuteAsync(GetProductsByIdsRequest req, CancellationToken ct)
     {
-        var items = await _productCatalogContext.CatalogItems
+        List<CatalogItemSummaryDto> items = await _productCatalogContext.CatalogItems
             .Where(x => req.Ids.Contains(x.Id))
             .ProjectToDto()
             .ToListAsync(ct);

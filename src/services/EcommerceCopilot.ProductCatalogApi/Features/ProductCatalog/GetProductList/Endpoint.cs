@@ -14,7 +14,7 @@ public class Endpoint : Endpoint<GetProductListRequest, Results<Ok<GetProductLis
 
     public override void Configure()
     {
-        Get("/api/product-catalog");
+        Get("/api/catalog");
         AllowAnonymous();
         ResponseCache(60);
     }
