@@ -6,7 +6,7 @@ namespace EcommerceCopilot.ProductCatalogApi.Entities;
 
 public class CatalogItem
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
     public string Name { get; set; }
@@ -17,11 +17,11 @@ public class CatalogItem
 
     public string ImageUrl { get; set; }
 
-    public int CatalogTypeId { get; set; }
+    public Guid CatalogTypeId { get; set; }
 
     public CatalogType CatalogType { get; set; }
 
-    public int CatalogBrandId { get; set; }
+    public Guid CatalogBrandId { get; set; }
 
     public CatalogBrand CatalogBrand { get; set; }
 

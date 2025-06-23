@@ -3,8 +3,8 @@
 
 public class CreateCatalogItemRequest
 {
-    public int CatalogBrandId { get; set; }
-    public int CatalogTypeId { get; set; }
+    public Guid CatalogBrandId { get; set; }
+    public Guid CatalogTypeId { get; set; }
     public string Description { get; set; }
     public string Name { get; set; }
     public string ImageUrl { get; set; }
@@ -16,7 +16,7 @@ public class CreateCatalogItemRequest
 
 public class CreateCatalogItemResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }
 
 public class CreateCatalogItemErrorResponse

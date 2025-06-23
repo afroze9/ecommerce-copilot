@@ -45,8 +45,8 @@ public partial class ProductCatalogContextSeed(
 
         await context.SaveChangesAsync();
 
-        Dictionary<string, int> brandIdsByName = await context.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.Id);
-        Dictionary<string, int> typeIdsByName = await context.CatalogTypes.ToDictionaryAsync(x => x.Type, x => x.Id);
+        Dictionary<string, Guid> brandIdsByName = await context.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.Id);
+        Dictionary<string, Guid> typeIdsByName = await context.CatalogTypes.ToDictionaryAsync(x => x.Type, x => x.Id);
 
         CatalogItem[] catalogItems = sourceItems.Select(source => new CatalogItem
         {
@@ -70,7 +70,7 @@ public partial class ProductCatalogContextSeed(
 
     private class ProductCatalogSourceEntry
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
         public string Name { get; set; }

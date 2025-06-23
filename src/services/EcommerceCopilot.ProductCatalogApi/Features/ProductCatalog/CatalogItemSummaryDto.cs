@@ -4,7 +4,7 @@ namespace EcommerceCopilot.ProductCatalogApi.Features.ProductCatalog;
 
 public class CatalogItemSummaryDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 
